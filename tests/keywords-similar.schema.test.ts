@@ -19,19 +19,19 @@ describe('KeywordsSimilar input schema (from tool definition)', () => {
       sort: 'keyword',
       sort_order: 'asc',
       history_trend: true,
-      'filter[volume][from]': 50,
-      'filter[volume][to]': 5000,
-      'filter[difficulty][from]': 18,
-      'filter[difficulty][to]': 40,
-      'filter[cpc][from]': 0.1,
-      'filter[cpc][to]': 3,
-      'filter[competition][from]': 0.2,
-      'filter[competition][to]': 0.7,
-      'filter[keyword_count][from]': 3,
-      'filter[keyword_count][to]': 5,
-      'filter[characters_count][from]': 20,
-      'filter[characters_count][to]': 50,
-      'filter[serp_features]': 'sge,images,top_stories',
+      'filter.volume.from': 50,
+      'filter.volume.to': 5000,
+      'filter.difficulty.from': 18,
+      'filter.difficulty.to': 40,
+      'filter.cpc.from': 0.1,
+      'filter.cpc.to': 3,
+      'filter.competition.from': 0.2,
+      'filter.competition.to': 0.7,
+      'filter.keyword_count.from': 3,
+      'filter.keyword_count.to': 5,
+      'filter.characters_count.from': 20,
+      'filter.characters_count.to': 50,
+      'filter.serp_features': 'sge,images,top_stories',
     } as const;
     const result = schema.safeParse(payload);
     expect(result.success).toBe(true);
@@ -40,14 +40,14 @@ describe('KeywordsSimilar input schema (from tool definition)', () => {
   it('rejects unsupported serp_features token', () => {
     const schema = z.object(getSchema());
     const bad = {
-      'filter[serp_features]': 'sge,unknown_feature',
+      'filter.serp_features': 'sge,unknown_feature',
       source: 'us',
       keyword: 'x',
     } as const;
     expect(() => schema.parse(bad)).toThrow();
 
     const ok = {
-      'filter[serp_features]': 'sge, images , top_stories',
+      'filter.serp_features': 'sge, images , top_stories',
       source: 'us',
       keyword: 'x',
     } as const;
@@ -56,7 +56,7 @@ describe('KeywordsSimilar input schema (from tool definition)', () => {
 
   it('rejects invalid difficulty > 100', () => {
     const schema = z.object(getSchema());
-    const bad = { 'filter[difficulty][to]': 101, source: 'us', keyword: 'x' } as const;
+    const bad = { 'filter.difficulty.to': 101, source: 'us', keyword: 'x' } as const;
     expect(() => schema.parse(bad)).toThrow();
   });
 

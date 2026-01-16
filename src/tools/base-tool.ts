@@ -163,18 +163,30 @@ export abstract class BaseTool {
     return { content: [{ type: 'text' as const, text: pretty }] };
   }
 
+  /**
+   * Converts dot notation keys to bracket notation for API compatibility.
+   * e.g., "filter.volume.from" -> "filter[volume][from]"
+   */
+  private convertDotToBracketNotation(key: string): string {
+    const parts = key.split('.');
+    if (parts.length === 1) return key;
+    return parts[0] + parts.slice(1).map(p => `[${p}]`).join('');
+  }
+
   private getUrlSearchParamsFromParams(queryParams: Record<string, unknown>) {
     const query = new URLSearchParams();
 
     for (const [key, value] of Object.entries(queryParams || {})) {
       if (value === undefined || value === null) continue;
 
+      const apiKey = this.convertDotToBracketNotation(key);
+
       if (Array.isArray(value)) {
         for (const v of value) {
-          if (v !== undefined && v !== null) query.append(key, String(v));
+          if (v !== undefined && v !== null) query.append(apiKey, String(v));
         }
       } else {
-        query.append(key, String(value));
+        query.append(apiKey, String(value));
       }
     }
 

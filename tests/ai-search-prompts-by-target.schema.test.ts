@@ -19,14 +19,14 @@ describe('AiSearchPromptsByTarget input schema (from tool definition)', () => {
       offset: 0,
       sort: 'volume',
       sort_order: 'desc',
-      'filter[volume][from]': 10,
-      'filter[volume][to]': 1000,
-      'filter[keyword_count][from]': 2,
-      'filter[keyword_count][to]': 10,
-      'filter[characters_count][from]': 10,
-      'filter[characters_count][to]': 100,
-      'filter[multi_keyword_included]': '[[{"type":"contains","value":"keyword"}]]',
-      'filter[multi_keyword_excluded]':
+      'filter.volume.from': 10,
+      'filter.volume.to': 1000,
+      'filter.keyword_count.from': 2,
+      'filter.keyword_count.to': 10,
+      'filter.characters_count.from': 10,
+      'filter.characters_count.to': 100,
+      'filter.multi_keyword_included': '[[{"type":"contains","value":"keyword"}]]',
+      'filter.multi_keyword_excluded':
         '[[{"type":"contains","value":"seo"}],[{"type":"contains","value":"data"}]]',
     } as const;
     const result = schema.safeParse(payload);
@@ -136,20 +136,20 @@ describe('AiSearchPromptsByTarget input schema (from tool definition)', () => {
       engine: 'chatgpt',
       source: 'us',
       target: 'example.com',
-      'filter[volume][from]': 10,
-      'filter[volume][to]': 100,
+      'filter.volume.from': 10,
+      'filter.volume.to': 100,
     };
     const negativeVolumeFrom = {
       engine: 'chatgpt',
       source: 'us',
       target: 'example.com',
-      'filter[volume][from]': -5,
+      'filter.volume.from': -5,
     };
     const negativeVolumeTo = {
       engine: 'chatgpt',
       source: 'us',
       target: 'example.com',
-      'filter[volume][to]': -10,
+      'filter.volume.to': -10,
     };
 
     expect(schema.safeParse(validVolume).success).toBe(true);
@@ -164,14 +164,14 @@ describe('AiSearchPromptsByTarget input schema (from tool definition)', () => {
       engine: 'chatgpt',
       source: 'us',
       target: 'example.com',
-      'filter[keyword_count][from]': 1,
-      'filter[keyword_count][to]': 10,
+      'filter.keyword_count.from': 1,
+      'filter.keyword_count.to': 10,
     };
     const zeroKeywordCount = {
       engine: 'chatgpt',
       source: 'us',
       target: 'example.com',
-      'filter[keyword_count][from]': 0,
+      'filter.keyword_count.from': 0,
     };
 
     expect(schema.safeParse(validKeywordCount).success).toBe(true);
@@ -185,14 +185,14 @@ describe('AiSearchPromptsByTarget input schema (from tool definition)', () => {
       engine: 'chatgpt',
       source: 'us',
       target: 'example.com',
-      'filter[characters_count][from]': 5,
-      'filter[characters_count][to]': 100,
+      'filter.characters_count.from': 5,
+      'filter.characters_count.to': 100,
     };
     const zeroCharCount = {
       engine: 'chatgpt',
       source: 'us',
       target: 'example.com',
-      'filter[characters_count][from]': 0,
+      'filter.characters_count.from': 0,
     };
 
     expect(schema.safeParse(validCharCount).success).toBe(true);
@@ -216,7 +216,7 @@ describe('AiSearchPromptsByTarget input schema (from tool definition)', () => {
       engine: 'chatgpt',
       source: 'us',
       target: 'example.com',
-      'filter[multi_keyword_included]':
+      'filter.multi_keyword_included':
         '[[{"type":"contains","value":"test"}],[{"type":"contains","value":"example"}]]',
     };
 
@@ -231,7 +231,7 @@ describe('AiSearchPromptsByTarget input schema (from tool definition)', () => {
       engine: 'chatgpt',
       source: 'us',
       target: 'example.com',
-      'filter[multi_keyword_excluded]':
+      'filter.multi_keyword_excluded':
         '[[{"type":"contains","value":"seo"}],[{"type":"contains","value":"data"}],[{"type":"contains","value":"meat"}]]',
     };
 

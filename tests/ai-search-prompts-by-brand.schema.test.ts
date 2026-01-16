@@ -18,14 +18,14 @@ describe('AiSearchPromptsByBrand input schema (from tool definition)', () => {
       sort_order: 'desc',
       limit: 100,
       offset: 0,
-      'filter[volume][from]': 10,
-      'filter[volume][to]': 1000,
-      'filter[keyword_count][from]': 2,
-      'filter[keyword_count][to]': 10,
-      'filter[characters_count][from]': 10,
-      'filter[characters_count][to]': 100,
-      'filter[multi_keyword_included]': '[[{"type":"contains","value":"keyword"}]]',
-      'filter[multi_keyword_excluded]':
+      'filter.volume.from': 10,
+      'filter.volume.to': 1000,
+      'filter.keyword_count.from': 2,
+      'filter.keyword_count.to': 10,
+      'filter.characters_count.from': 10,
+      'filter.characters_count.to': 100,
+      'filter.multi_keyword_included': '[[{"type":"contains","value":"keyword"}]]',
+      'filter.multi_keyword_excluded':
         '[[{"type":"contains","value":"seo"}],[{"type":"contains","value":"data"}]]',
     } as const;
     const result = schema.safeParse(payload);
@@ -147,8 +147,8 @@ describe('AiSearchPromptsByBrand input schema (from tool definition)', () => {
       engine: 'chatgpt',
       brand: 'Test Brand',
       source: 'us',
-      'filter[volume][from]': 10,
-      'filter[volume][to]': 100,
+      'filter.volume.from': 10,
+      'filter.volume.to': 100,
     };
     const result1 = schema.safeParse(validVolume);
     expect(result1.success, result1.error?.toString()).toBe(true);
@@ -157,7 +157,7 @@ describe('AiSearchPromptsByBrand input schema (from tool definition)', () => {
       engine: 'chatgpt',
       brand: 'Test Brand',
       source: 'us',
-      'filter[volume][from]': -5,
+      'filter.volume.from': -5,
     };
     const result2 = schema.safeParse(negativeVolumeFrom);
     expect(result2.success, result2.error?.toString()).toBe(false);
@@ -166,7 +166,7 @@ describe('AiSearchPromptsByBrand input schema (from tool definition)', () => {
       engine: 'chatgpt',
       brand: 'Test Brand',
       source: 'us',
-      'filter[volume][to]': -10,
+      'filter.volume.to': -10,
     };
     const result3 = schema.safeParse(negativeVolumeTo);
     expect(result3.success, result3.error?.toString()).toBe(false);
@@ -179,8 +179,8 @@ describe('AiSearchPromptsByBrand input schema (from tool definition)', () => {
       engine: 'chatgpt',
       brand: 'Test Brand',
       source: 'us',
-      'filter[keyword_count][from]': 1,
-      'filter[keyword_count][to]': 10,
+      'filter.keyword_count.from': 1,
+      'filter.keyword_count.to': 10,
     };
     const result1 = schema.safeParse(validKeywordCount);
     expect(result1.success, result1.error?.toString()).toBe(true);
@@ -189,7 +189,7 @@ describe('AiSearchPromptsByBrand input schema (from tool definition)', () => {
       engine: 'chatgpt',
       brand: 'Test Brand',
       source: 'us',
-      'filter[keyword_count][from]': 0,
+      'filter.keyword_count.from': 0,
     };
     const result2 = schema.safeParse(zeroKeywordCount);
     expect(result2.success, result2.error?.toString()).toBe(true);
@@ -202,8 +202,8 @@ describe('AiSearchPromptsByBrand input schema (from tool definition)', () => {
       engine: 'chatgpt',
       brand: 'Test Brand',
       source: 'us',
-      'filter[characters_count][from]': 5,
-      'filter[characters_count][to]': 100,
+      'filter.characters_count.from': 5,
+      'filter.characters_count.to': 100,
     };
     const result1 = schema.safeParse(validCharCount);
     expect(result1.success, result1.error?.toString()).toBe(true);
@@ -212,7 +212,7 @@ describe('AiSearchPromptsByBrand input schema (from tool definition)', () => {
       engine: 'chatgpt',
       brand: 'Test Brand',
       source: 'us',
-      'filter[characters_count][from]': 0,
+      'filter.characters_count.from': 0,
     };
     const result2 = schema.safeParse(zeroCharCount);
     expect(result2.success, result2.error?.toString()).toBe(true);
@@ -249,7 +249,7 @@ describe('AiSearchPromptsByBrand input schema (from tool definition)', () => {
       engine: 'chatgpt',
       brand: 'Test Brand',
       source: 'us',
-      'filter[multi_keyword_included]':
+      'filter.multi_keyword_included':
         '[[{"type":"contains","value":"test"}],[{"type":"contains","value":"example"}]]',
     };
 
@@ -264,7 +264,7 @@ describe('AiSearchPromptsByBrand input schema (from tool definition)', () => {
       engine: 'chatgpt',
       brand: 'Test Brand',
       source: 'us',
-      'filter[multi_keyword_excluded]':
+      'filter.multi_keyword_excluded':
         '[[{"type":"contains","value":"seo"}],[{"type":"contains","value":"data"}],[{"type":"contains","value":"meat"}]]',
     };
 
