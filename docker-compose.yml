@@ -11,5 +11,5 @@ services:
       - SERANKING_API_BASE=${SERANKING_API_BASE}
     volumes:
       - ./src:/app/src
-    stdin_open: true
-    tty: true
+    ports:
+      - "5000:5000"
